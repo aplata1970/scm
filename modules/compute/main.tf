@@ -6,6 +6,7 @@ provider "aws" {
 
 #Get Linux AMI ID using SSM Parameter endpoint
 #===============================================
+# A data source is accessed via a special kind of resource known as a data resource, declared using a data block:
 data "aws_ssm_parameter" "webserver-ami" {
   name = "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2"
 }
@@ -19,6 +20,7 @@ data "template_file" "user-init" {
 
 #Create and bootstrap webserver
 #===============================
+#A resource block declares a resource of a given type ("aws_instance") with a given local name ("web"). 
 resource "aws_instance" "webserver" {
  ami                         = data.aws_ssm_parameter.webserver-ami.value
  instance_type               = "t2.micro"
